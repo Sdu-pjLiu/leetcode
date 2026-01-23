@@ -18,48 +18,28 @@ struct ListNode {
 };
 
 // =================== 2. 链表操作算法 ===================
-
 class Solution {
 public:
-    // 主函数：将两个链表相加
     ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+        ListNode* dummy_node = new ListNode(0); // 哑节点
+        ListNode* current_node = dummy_node; // 当前链表
 
-        // 创建一个哑节点(dummy)，方便返回结果链表
-        // 哑节点的作用：避免处理头节点特殊情况
-        ListNode* dummy = new ListNode(0);
-
-        ListNode* curr = dummy; // curr 用于指向新链表的当前节点
-        int carry = 0;          // 初始化进位 carry 为 0
-
-        // 当 l1 或 l2 还有节点，或者 carry 不为 0 时，循环继续
-        while (l1 != nullptr || l2 != nullptr || carry != 0) {
-
-            // 如果 l1 还有节点，取 l1->val，否则取 0
-            int val1 = (l1 != nullptr) ? l1->val : 0;
-
-            // 如果 l2 还有节点，取 l2->val，否则取 0
-            int val2 = (l2 != nullptr) ? l2->val : 0;
-
-            int sum = val1 + val2 + carry; // 当前位的总和
-
-            carry = sum / 10;               // 更新进位
-            int digit = sum % 10;           // 当前位的值（0~9）
-
-            curr->next = new ListNode(digit); // 创建新节点并接到结果链表
-            curr = curr->next;               // curr 指针向后移动
-
-            // l1 向后移动到下一个节点
-            if (l1) l1 = l1->next;
-
-            // l2 向后移动到下一个节点
-            if (l2) l2 = l2->next;
+        int carry = 0;//进位变量
+        // 当l1和l2节点不为空且进位不为0的时候
+        while(l1 != nullptr || l2 != nullptr || carry != 0 ){
+            int val1 = (l1 != nullptr)? l1 -> val : 0; // val1 的当前节点值
+            int val2 = (l2 != nullptr)? l2 -> val : 0; // val2 的当前节点值
+            int sum = val1 + val2 + carry; //当前节点值的和
+            int res = sum % 10; // 当前节点的值
+            carry = sum / 10; // 下一节点的进位
+            current_node -> next = new ListNode(res); // 新建下一节点并存放值
+            current_node = current_node -> next; // 移动到下一节点
+            if (l1){ l1 = l1 -> next; } // 移动到下一节点
+            if (l2){ l2 = l2 -> next; } // 移动到下一节点
         }
-
-        // 返回哑节点的下一个节点，才是真正的结果链表头
-        return dummy->next;
+        return dummy_node -> next; // 返回哑节点之后的节点
     }
 };
-
 // =================== 3. 链表创建和打印 ===================
 
 // 根据数组创建链表
