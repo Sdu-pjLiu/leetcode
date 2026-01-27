@@ -6,6 +6,28 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+// 暴力解决，时间复杂度O(n^2)
+class Solution1 {
+public:
+    int lengthOfLongestSubstring(string s) {
+        int max_len = 0; // 记录最大长度
+        string aw; // 初始化需要检查的子串
+        for (int right = 0 ;right < s.size(); ++right){
+            char c = s[right];
+            for(int i = 0; i < aw.size(); ++i){
+                if(s[right] == aw[i]){ 
+                    aw = aw.substr(i + 1); 
+                    break; 
+                }
+            }
+            aw.push_back(c);
+            max_len = max(max_len,(int)aw.size());
+        }
+        return max_len;
+    }
+};
+
+// 时间复杂度O(n)
 class Solution {
 public:
     int lengthOfLongestSubstring(string s) {
@@ -36,7 +58,7 @@ public:
 };
 
 int main() {
-    Solution sol;
+    Solution1 sol;
     cout << sol.lengthOfLongestSubstring("abcabcbb") << endl; // 输出 3
     cout << sol.lengthOfLongestSubstring("bbbbb") << endl; // 输出 1
     cout << sol.lengthOfLongestSubstring("pwxwkew") << endl; // 输出 3
